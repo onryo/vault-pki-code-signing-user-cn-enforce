@@ -47,13 +47,13 @@ resource "vault_mount" "pki" {
 }
 
 resource "vault_pki_secret_backend_config_urls" "config_urls" {
-  backend                 = "${vault_mount.pki.path}"
+  backend                 = vault_mount.pki.path
   issuing_certificates    = ["http://127.0.0.1:8200/v1/pki/ca"]
   crl_distribution_points = ["http://127.0.0.1:8200/v1/pki/crl"]
 }
 
 resource "vault_pki_secret_backend_root_cert" "code_sign_root_ca" {
-  depends_on = ["vault_mount.pki"]
+  depends_on = [vault_mount.pki]
 
   backend = vault_mount.pki.path
 
